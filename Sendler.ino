@@ -20,7 +20,6 @@ void setup()
 
 bool wait_input = true;
 char letter = ' ';
-bool end_word = false;
 
 void loop()
 {
