@@ -1,7 +1,7 @@
 #define DATA_PIN 9
 #define DATA_LEVEL LOW
 
-const int TU = 1000;
+const int TU = 50;
 #define LETTER_SEP 3
 #define WORD_SEP 7
 
@@ -28,7 +28,7 @@ void loop()
     if (wait_input)
     {
         wait_input = false;
-      	Serial.print("Send: ");
+        Serial.print("Send: ");
     }
     letter = Serial.read();
 
@@ -42,7 +42,7 @@ void loop()
         {
             if (letter == data_letters[it])
             {
-      			Serial.print(data_letters[it]);
+            Serial.print(data_letters[it]);
                 send_data(data_encoded[it]);
                 break;
             }
@@ -52,7 +52,7 @@ void loop()
   else if (!wait_input)
   {
     send_sep_word();
-    Serial.print("> ");
+    Serial.print("\n> ");
     wait_input = true;
   }
 }
@@ -83,5 +83,5 @@ void send_sep_word()
 {
         digitalWrite(DATA_PIN, !DATA_LEVEL);
         delay((WORD_SEP - LETTER_SEP) * TU);   // задержка между словами (LETTER_SEP * TU уже выждан в цикле)
-      	Serial.println(";");
+        Serial.print(" ");
 }

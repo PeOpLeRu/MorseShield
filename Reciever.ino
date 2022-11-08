@@ -1,7 +1,7 @@
 #define DATA_PIN 2
 #define DATA_LEVEL LOW
 
-const int TU = 1000;
+const int TU = 50;
 #define LETTER_SEP 3
 #define WORD_SEP 7
 #define IDLE_TIME 10
@@ -16,6 +16,7 @@ bool check_letter = false;
 bool is_idle = true;
 
 int current = 0;
+bool new_data = true;
 bool end_word = false;
 
 int timings[20];
@@ -60,7 +61,17 @@ void recieve_letter()
             }
         }
 
-        if (timings[current - 1] >= WORD_SEP)
+        if (new_data)
+        {
+          Serial.print("\nGet: ");
+          new_data = false;
+        }
+
+        if (timings[current - 1] >= IDLE_TIME)
+        {
+            new_data = true;
+        }
+        else if (timings[current - 1] >= WORD_SEP)
         {
             end_word = true;
         }
@@ -77,7 +88,7 @@ void recieve_letter()
 
         if (end_word)
         {
-            Serial.print(";\n");
+            Serial.print(" ");
             end_word = false;
         }
     }
